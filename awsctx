@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+set -o pipefail
+
+usage() {
+  cat <<"EOU"
+This is the context switch helper for awscli.
+
+usage:
+  awsctx            : show context list or use peco to filter context
+
+  awsctx -h         : show this message
+
+EOU
+}
+
+if [ "$1" = "-h" ]; then
+  usage
+  return 0
+fi
+
+which aws > /dev/null 2>&1
+if [ "$?" -eq "1" ]; then
+  echo plz install awscli
+  return 1
+fi
+
+which peco > /dev/null 2>&1
+if [ "$?" -eq "1" ]; then
+  echo plz install peco
+  return 1
+fi
+
+CONFIG_FILEPATH="${HOME}/.config/awsctx/config.toml"
+SERIAL_NUMBER=`cat ${CONFIG_FILEPATH} | grep serial | awk -F\' '{print $2}'`
+
+CONTEXT=`cat ${CONFIG_FILEPATH} | awk -F= '{print $1}' | grep \/ | sed 's/\s*$//' | peco`
+if [ "${CONTEXT}" = "" ]; then
+  usage
+  return 1
+fi
+
+ROLE_ARN=`cat ${CONFIG_FILEPATH} | grep ${CONTEXT} | awk -F\' '{print $2}'`
+
+echo -n "Input authenticator's code> "
+read TOKEN_CODE
+
+unset AWS_CTX AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
+
+RESPONSE=`aws sts assume-role \
+    --role-arn ${ROLE_ARN} \
+    --role-session-name session-${USER} \
+    --token-code ${TOKEN_CODE} \
+    --serial-number ${SERIAL_NUMBER}`
+
+export AWS_CTX=`echo ${CONTEXT}`
+export AWS_ACCESS_KEY_ID=`echo ${RESPONSE} | jq .Credentials.AccessKeyId -r`
+export AWS_SECRET_ACCESS_KEY=`echo ${RESPONSE} | jq .Credentials.SecretAccessKey -r`
+export AWS_SESSION_TOKEN=`echo ${RESPONSE} | jq .Credentials.SessionToken -r`
+
+echo "Assume role success to ${CONTEXT}"
