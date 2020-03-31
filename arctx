@@ -31,7 +31,7 @@ if [ "$?" -eq "1" ]; then
   return 1
 fi
 
-CONFIG_FILEPATH="${XDG_CACHE_HOME:-$HOME/.aws}/arctx/config.toml"
+CONFIG_FILEPATH="${$HOME}/.config/arctx/config.toml"
 SERIAL_NUMBER=`cat ${CONFIG_FILEPATH} | grep serial | awk -F\' '{print $2}'`
 
 CONTEXT=`cat ${CONFIG_FILEPATH} | awk -F= '{print $1}' | grep \/ | sed 's/\s*$//' | peco`
