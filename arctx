@@ -62,4 +62,4 @@ export AWS_ACCESS_KEY_ID=`echo ${RESPONSE} | jq .Credentials.AccessKeyId -r`
 export AWS_SECRET_ACCESS_KEY=`echo ${RESPONSE} | jq .Credentials.SecretAccessKey -r`
 export AWS_SESSION_TOKEN=`echo ${RESPONSE} | jq .Credentials.SessionToken -r`
 
-echo "Assume role success to ${CONTEXT}"
+echo "Successfully assume role to ${CONTEXT}"
