@@ -1,18 +1,18 @@
-# awsctx
+# arctx
 
 ## Overview
 This is the context switch helper for `aws sts assume-role`
 
 ## Usage
-``` $ source awsctx -h
-This is the context switch helper for awscli.
+``` $ source arctx -h
+This is the context switch helper for 'aws sts assume-role'
 
 usage:
-  awsctx            : show context list or use peco to filter context
+  arctx            : show context list or use peco to filter context
 
-  awsctx -h         : show this message
+  arctx -h         : show this message
 
-$ source awsctx
+$ source arctx
 - a filter using peco -
 Input authenticator's code> xxxxxx
 Assume role success to <account name>/<role name>
@@ -20,8 +20,8 @@ Assume role success to <account name>/<role name>
 
 ## Install(Recommended)
 ```
-$ git clone https://github.com/m3y/awsctx.git
-$ alias awsctx="source /path/to/awsctx/awsctx"
+$ git clone https://github.com/m3y/arctx.git
+$ alias arctx="source /path/to/arctx/arctx"
 ```
 
 ## Dependencies
