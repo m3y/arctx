@@ -27,3 +27,7 @@ $ alias arctx="source /path/to/arctx/arctx"
 ## Dependencies
 - [awscli v2](https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/install-cliv2-mac.html)
 - [peco](https://github.com/peco/peco)
+
+
+----
+Inspired by [kubectx](https://github.com/ahmetb/kubectx)
