@@ -53,6 +53,10 @@ RESPONSE=`aws sts assume-role \
     --token-code ${TOKEN_CODE} \
     --serial-number ${SERIAL_NUMBER}`
 
+if [ "${RESPONSE}" = "" ]; then
+  return 1
+fi
+
 export AWS_ARCTX=`echo ${CONTEXT}`
 export AWS_ACCESS_KEY_ID=`echo ${RESPONSE} | jq .Credentials.AccessKeyId -r`
 export AWS_SECRET_ACCESS_KEY=`echo ${RESPONSE} | jq .Credentials.SecretAccessKey -r`
