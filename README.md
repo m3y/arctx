@@ -4,13 +4,14 @@
 This is the context switch helper for `aws sts assume-role`
 
 ## Usage
-``` $ source arctx -h
+``` $ source arctx help
 This is the context switch helper for 'aws sts assume-role'
 
 usage:
   arctx            : show context list or use peco to filter context
+  arctx config     : edit configuration file
 
-  arctx -h         : show this message
+  arctx help       : show this message
 
 $ source arctx
 - a filter using peco -
